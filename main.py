@@ -24,9 +24,36 @@ for filepath in filepaths:
              ln=1, border=0)
 
     # Write day and creating date
-
     # named_tuple=time.localtime()
     # time_string=time.strftime("%Y.%m.%d")
 
     pdf.cell(w=0,h=12,txt=f"Date: {date}",align="L",ln=1,border=0)
+
+    #Reading .xlsx files
+    data=pd.read_excel(filepath,sheet_name="Sheet 1")
+
+    #Adding first row as a column names
+    columns=data.columns
+    columns=[item.replace("_"," ").title() for item in columns]
+    pdf.set_font(family="Times", style="B", size=10)
+    pdf.set_text_color(80, 80, 80)
+
+    # Add a header
+    pdf.cell(w=30, h=8, txt=columns[0], border=1)
+    pdf.cell(w=70, h=8, txt=columns[1], border=1)
+    pdf.cell(w=30, h=8, txt=columns[2], border=1)
+    pdf.cell(w=30, h=8, txt=columns[3], border=1)
+    pdf.cell(w=30, h=8, txt=columns[4], border=1,ln=1)
+
+    for index,rows in df.iterrows():
+        pdf.set_font(family="Times", size=10)
+        pdf.set_text_color(80, 80, 80)
+
+        # Cells for every row
+        pdf.cell(w=30,h=8,txt=str(rows["product_id"]),border=1)
+        pdf.cell(w=70,h=8,txt=str(rows["product_name"]),border=1)
+        pdf.cell(w=30, h=8, txt=str(rows["amount_purchased"]),border=1)
+        pdf.cell(w=30, h=8, txt=str(rows["price_per_unit"]),border=1)
+        pdf.cell(w=30, h=8, txt=str(rows["total_price"]),border=1,ln=1)
+
     pdf.output(f"PDFs/{filename}.pdf")
