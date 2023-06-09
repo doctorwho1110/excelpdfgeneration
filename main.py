@@ -72,4 +72,5 @@ for filepath in filepaths:
     pdf.set_text_color(80, 80, 80)
     pdf.cell(w=30, h=8, txt=f"Total price is: {total_sum}", ln=1)
 
+
     pdf.output(f"PDFs/{filename}.pdf")
